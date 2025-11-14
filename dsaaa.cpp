@@ -4,10 +4,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// okay so... this is like a quick & dirty Task Scheduler
-// emergency tasks first obviously, then by priority, duration, id
-// might clean up later (if it even works lol)
-
 struct TaskRec {
     int ID;
     int dur;
@@ -22,13 +18,13 @@ struct TaskRec {
         : ID(i), dur(d), pr(p), emerg(e) {}
 };
 
-// was gonna use priority_queue but nah I wanted to "see" the heap
+
 struct Node {
     int idx;
 };
 
 class WeirdHeap {
-    vector<Node> h;                 // lol should rename to heap but too lazy
+    vector<Node> h;               
     const vector<TaskRec>* ref = nullptr;
 
     bool higher(const Node &a, const Node &b) const {
@@ -127,16 +123,14 @@ int main() {
         auto &t = arr[idx];
 
         t.start = time;
-        // could have added arrival time but skipped
+        
         t.endt = time + t.dur;
-        t.turn = t.endt;   // since arrival is 0
+        t.turn = t.endt;   
         t.wait = t.start;  // same logic again
         time = t.endt;
 
         doneOrder.push_back(idx);
 
-        // debug (commented out):
-        // cout << "Scheduled: " << t.ID << " -> " << t.start << "-" << t.endt << endl;
     }
 
     cout << "\n== FINAL SCHEDULE ==\n";
@@ -164,11 +158,11 @@ int main() {
     cout << "\nAvg waiting: " << fixed << setprecision(2) << avgW;
     cout << "\n#Tasks that waited: " << waited << "\n";
 
-    // random check (why not)
+  
     if (makespan < 0) cerr << "??? Negative makespan??? weird\n";
 
-    // TODO: maybe print Gantt chart (later)
-    // Also, maybe sort by start time before printing? hmm.
+
 
     return 0;
+
 }
